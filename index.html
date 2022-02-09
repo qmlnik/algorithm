@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body, textarea, button{
+        font-size: 20px;
+      }
+
+      body{
+        font-weight: bold;
+      }
+
+      .title{
+        font-size: 25px;
+        margin: 15px 0;
+      }
+
+      .low-index{
+        font-size: 16px;
+        position: relative;
+        top: 2px;
+      }
+
+      .color-red{
+        color: red;
+      }
+
+      .color-green{
+        color: green;
+      }
+
+      textarea{
+        width: 400px;
+        min-height: 300px;
+        max-height: 700px;
+      }
+
+      .start-button{
+        display: block;
+        margin: 15px 15px 0 0;
+      }
+
+      .helper{
+        font-weight: normal;
+        font-style: italic;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="helper">Használat: Adja meg az input CNF változóinak a számát és magát a CNF-et, mintha .cnf fájlba lenne (0-kal a sorok végén)
+      a probléma és komment sorok nélkül. </div>
+    <div class="title">Változók száma:</div>
+    <input class="js-variable-num" value="15" />
+    <div class="title">Input CNF:</div>
+    <textarea class="js-cnf-input">1 -12 -15 0&#13;&#10;-9 15 -5 0&#13;&#10;8 9 2 0&#13;&#10;13 -11 -15 0&#13;&#10;7 3 8 0&#13;&#10;4 2 -2 0&#13;&#10;-7 15 -11 0&#13;&#10;7 5 -13 0&#13;&#10;4 -9 10 0&#13;&#10;-1 9 -7 0&#13;&#10;-10 1 15 0&#13;&#10;-10 15 14 0&#13;&#10;-9 5 -10 0&#13;&#10;10 5 -14 0&#13;&#10;-13 5 -6 0&#13;&#10;2 14 -3 0&#13;&#10;-4 -8 -6 0&#13;&#10;5 -6 9 0&#13;&#10;-1 -2 -14 0&#13;&#10;11 6 12 0&#13;&#10;-7 4 -14 0&#13;&#10;4 -11 12 0&#13;&#10;-12 3 4 0&#13;&#10;7 -5 -9 0&#13;&#10;8 -1 4 0&#13;&#10;-2 -11 -5 0&#13;&#10;1 2 -8 0&#13;&#10;-13 -5 1 0&#13;&#10;13 12 -8 0&#13;&#10;-6 -4 -11 0&#13;&#10;-14 -4 -12 0&#13;&#10;3 6 -12 0&#13;&#10;-3 -10 13 0&#13;&#10;-6 -3 12 0&#13;&#10;11 9 -2 0&#13;&#10;-15 6 -7 0&#13;&#10;-13 3 -2 0&#13;&#10;-3 12 -9 0&#13;&#10;11 3 -13 0&#13;&#10;13 6 11 0&#13;&#10;6 2 -5 0&#13;&#10;-8 -1 10 0&#13;&#10;14 9 -4 0&#13;&#10;13 10 8 0&#13;&#10;11 -4 -10 0</textarea>
+    <button class="start-button js-start">mehet</button>
+    <div class="title">Modellek:</div>
+    <div class="js-print-all_model"></div>
+    <div class="title">Modellek vizualizációja:</div>
+    <div class="js-model-visualizer"></div>
+  </body>
+</html>
