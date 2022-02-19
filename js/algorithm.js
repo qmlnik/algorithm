@@ -1,7 +1,8 @@
 class Algorithm{
-  constructor(variableNum, cnfArray){
+  constructor(variableNum, cnfArray, isHeuristic = true){
     this._variableNum = variableNum;
     this._cnfArray = cnfArray;
+    this._isHeuristic = isHeuristic;
     this._tempModelSet = [];
     this._resultModelSet = [];
     this._finalModelSet = [[]];
@@ -17,8 +18,10 @@ class Algorithm{
   }
 
   startAlgorithm(){
+    let bestClause;
     for(let i = 0; i < this._cnfArray.length; i++){
-      this._tempModelSet = this._generateAllModelSet(this._cnfArray[this._findBestClause()]);
+      bestClause = this._isHeuristic ? this._findBestClause() : i;
+      this._tempModelSet = this._generateAllModelSet(this._cnfArray[bestClause]);
 
       for(let j = 0; j < this._tempModelSet.length; j++){
         for(let k = 0; k < this._finalModelSet.length; k++){

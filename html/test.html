@@ -18,19 +18,18 @@
       <span><= n <=</span>
       <input class="js-interval-max" value="20">
     </div>
+    <div class="title">Heurisztika:</div>
+    <select class="js-heuristic-select">
+      <option value="1" selected>Be</option>
+      <option value="0">Ki</option>
+    </select>
     <button class="start-button js-start">mehet</button>
-    <div class="test-loading-container js-loading-container">
-      <div class="title">Tesztelés folyamatban...</div>
-      <span class="test-loading-current-num js-loading-current-num">n=5</span>
-      <span class="js-loading-current-cnf">1/60</span>
-    </div>
-    <canvas class="test-canvas js-canvas-runtime" height="50"></canvas>
-    <table  class="js-table-result">
+    <div class="js-canvas-container"></div>
+    <table  class="test-table js-table-result">
     </table>
     <script>
       let testui = new TestUI(
-        $(".js-interval-min"), $(".js-interval-max"), $(".js-start"), $(".js-loading-container"), $(".js-loading-current-num"),
-        $(".js-loading-current-cnf"), $(".js-canvas-runtime"), $(".js-table-result"));
+        $(".js-interval-min"), $(".js-interval-max"), $(".js-heuristic-select"), $(".js-start"), $(".js-canvas-container"), $(".js-table-result"));
       testui.setAction();
     </script>
   </body>

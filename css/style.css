@@ -1,9 +1,13 @@
-body, textarea, button{
+body, textarea, button, select{
   font-size: 20px;
 }
 
 body{
   font-weight: bold;
+}
+
+select{
+  min-width: 150px;
 }
 
 .page-title{

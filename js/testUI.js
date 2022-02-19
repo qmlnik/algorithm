@@ -1,29 +1,28 @@
 class TestUI{
-  constructor(intervalMinInputCont, intervalMaxInputCont, startButtonCont, loadingCont, loadingNumOutputCont, loadingCnfOutputCont,
-    canvasRuntimeCont, tableResultCont){
+  constructor(intervalMinInputCont, intervalMaxInputCont, heuristicSelectCont, startButtonCont, canvasCont, tableResultCont){
       this._intervalMinInputCont = intervalMinInputCont;
       this._intervalMaxInputCont = intervalMaxInputCont;
+      this._heuristicSelectCont = heuristicSelectCont;
       this._startButtonCont = startButtonCont;
-      this._loadingCont = loadingCont;
-      this._loadingNumOutputCont = loadingNumOutputCont;
-      this._loadingCnfOutputCont = loadingCnfOutputCont;
-      this._canvasRuntimeCont = canvasRuntimeCont;
+      this._canvasCont = canvasCont;
       this._tableResultCont = tableResultCont;
       this._resultMap;
   }
 
   setAction(){
     let self = this;
-    this._resultMap = new Map();
     this._startButtonCont.on("click", function(){
       let cnfArray;
       let meanRuntime;
       let startTime, endTime;
+      let isHeuristic = self._heuristicSelectCont.val() == "1" ? true : false;
+      self._resultMap = new Map();
       for(let n = parseInt(self._intervalMinInputCont.val()); n <= parseInt(self._intervalMaxInputCont.val()); n++){
         meanRuntime = 0;
         for(let j = 0; j < 100; j++){
+          console.log("n=" + n + ", " + (j + 1) + "/100");
           cnfArray = generateCnf(n);
-          let algorithm = new Algorithm(n, cnfArray);
+          let algorithm = new Algorithm(n, cnfArray, isHeuristic);
           startTime = performance.now();
           algorithm.startAlgorithm();
           endTime = performance.now();
@@ -46,6 +45,9 @@ class TestUI{
   }
 
   _drawChart(){
+    this._canvasCont.find("canvas").remove();
+    this._canvasCont.append("<canvas class='test-canvas' width='300' height='100'></canvas>");
+    let canvas = this._canvasCont.find("canvas");
     let resultMapKeyArray = [];
     let resultMapValueArray = [];
     let bgcolor = [];
@@ -54,17 +56,15 @@ class TestUI{
       resultMapValueArray.push(parseFloat(value));
       bgcolor.push("#ff0000");
     });
-    console.log(resultMapKeyArray);
-    console.log(resultMapValueArray);
-    let ctx = this._canvasRuntimeCont;
+    let ctx = canvas;
     let chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: resultMapKeyArray,
         datasets: [{
+          label: "változószám",
           data: resultMapValueArray,
-          backgroundColor: "rgba(0,0,0,1.0)",
-          borderColor: "rgba(0,0,0,0.1)",
+          backgroundColor: "rgba(0, 0, 255, 1.0)",
         }]
       }
     });
