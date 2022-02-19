@@ -1,0 +1,17 @@
+.test-interval-input{
+  display: flex;
+}
+
+.test-interval-input>*{
+  margin-right: 15px;
+}
+
+.test-loading-container{
+  display: none;
+  font-size: 30px;
+  padding: 30px;
+}
+
+.test-loading-current-num{
+  margin-right: 20px;
+}

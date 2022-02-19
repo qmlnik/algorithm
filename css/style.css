@@ -1,0 +1,40 @@
+body, textarea, button{
+  font-size: 20px;
+}
+
+body{
+  font-weight: bold;
+}
+
+.page-title{
+  width: 95vw;
+  text-align: center;
+  font-weight: bold;
+  font-size: 35px;
+  padding: 20px 0;
+}
+
+table{
+  border-collapse: collapse;
+}
+
+td, th{
+  border: thin solid black;
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.title{
+  font-size: 25px;
+  margin: 15px 0;
+}
+
+.start-button{
+  display: block;
+  margin: 15px 15px 0 0;
+}
+
+.helper{
+  font-weight: normal;
+  font-style: italic;
+}

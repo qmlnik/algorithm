@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/test.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="../js/algorithm.js"></script>
+    <script src="../js/testUI.js"></script>
+    <script src="../js/cnfgenerator.js"></script>
+  </head>
+  <body>
+    <div class="page-title">Teszt</div>
+    <div class="title">Tesztelt változó számok intervalluma:</div>
+    <div class="test-interval-input">
+      <input class="js-interval-min" value="5">
+      <span><= n <=</span>
+      <input class="js-interval-max" value="20">
+    </div>
+    <button class="start-button js-start">mehet</button>
+    <div class="test-loading-container js-loading-container">
+      <div class="title">Tesztelés folyamatban...</div>
+      <span class="test-loading-current-num js-loading-current-num">n=5</span>
+      <span class="js-loading-current-cnf">1/60</span>
+    </div>
+    <canvas class="test-canvas js-canvas-runtime" height="50"></canvas>
+    <table  class="js-table-result">
+    </table>
+    <script>
+      let testui = new TestUI(
+        $(".js-interval-min"), $(".js-interval-max"), $(".js-start"), $(".js-loading-container"), $(".js-loading-current-num"),
+        $(".js-loading-current-cnf"), $(".js-canvas-runtime"), $(".js-table-result"));
+      testui.setAction();
+    </script>
+  </body>
+</html>
