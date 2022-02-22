@@ -7,14 +7,12 @@ function generateCnf(n){
     currentClauseVariables = new Set();
     creatingClause = true;
     while(creatingClause){
-      while(currentClauseVariables.size < 3){
+      while(currentClauseVariables.size < 3)
         currentClauseVariables.add(Math.floor((Math.random() * n) + 1));
-      }
 
       currentClauseActual = Array.from(currentClauseVariables);
-      for(let j = 0; j < currentClauseActual.length; j++){
+      for(let j = 0; j < currentClauseActual.length; j++)
         currentClauseActual[j] = Math.random() < 0.5 ? currentClauseActual[j] * (-1) : currentClauseActual[j];
-      }
 
       if(checkIfAlreadyExists(cnfArray, currentClauseActual))
         continue;

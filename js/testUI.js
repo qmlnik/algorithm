@@ -40,7 +40,7 @@ class TestUI{
     let text = "<tr><th>Változószám</th><th>Átlagos idő</th></tr>";
     this._resultMap.forEach((value, key)=>{
       text += "<tr><td>n=" + key + "</td><td>" + value + "ms</td></tr>"
-    })
+    });
     this._tableResultCont.html(text);
   }
 

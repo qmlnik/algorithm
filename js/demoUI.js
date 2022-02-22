@@ -27,9 +27,8 @@ class DemoUI{
 
     for(let i = 0; i < splitTextArray.length; i++){
       tempTextArray = splitTextArray[i].split("\n")
-      for(let j = 0; j < tempTextArray.length; j++){
+      for(let j = 0; j < tempTextArray.length; j++)
         finalTextArray.push(tempTextArray[j]);
-      }
     }
 
     for(let i = 0; i < finalTextArray.length; i++){
@@ -51,13 +50,11 @@ class DemoUI{
       text += (i + 1) + ". értékadás: ";
       for(let j = 0; j < allModel[i].length; j++){
         text += "p<span class='low-index'>" + (j + 1) + "</span>&#8594;" + allModel[i][j];
-        if(j < allModel[i].length - 1){
+        if(j < allModel[i].length - 1)
           text += ", ";
-        }
       }
-      if(i < allModel.length - 1){
+      if(i < allModel.length - 1)
         text += "</br>";
-      }
     }
 
     this._modelOutputCont.html(text);
@@ -79,15 +76,14 @@ class DemoUI{
             text += "<span class='" + colorClass + "'>&#172;p<span class='low-index'>" + cnfArray[j][k] * (-1) + "</span></span>";
           }
 
-          if(k < cnfArray[j].length - 1){
+          if(k < cnfArray[j].length - 1)
             text += ",";
-          }
         }
         text += "}";
       }
       text += "}";
 
-      isModel = this._checkIfModel(cnfArray, allModel[i]);
+      isModel = Algorithm.checkIfModel(cnfArray, allModel[i]);
 
       if(isModel){
         text += ", ellenőrzés: <span style='color: green'>&#10003;</span>";
@@ -99,25 +95,5 @@ class DemoUI{
     }
 
     this._visualizerOutputCont.html(text);
-  }
-
-  _checkIfModel(cnfArray, model){
-    let isModel, currentLiteral, assignment;
-    for(let i = 0; i < cnfArray.length; i++){
-      isModel = false;
-      for(let j = 0; j < cnfArray[i].length; j++){
-        currentLiteral = cnfArray[i][j];
-        assignment = model[Math.abs(currentLiteral) - 1];
-        if((currentLiteral > 0 && assignment == 1) || (currentLiteral < 0 && assignment == 0)){
-          isModel = true;
-          continue;
-        }
-      }
-
-      if(!isModel)
-        return false;
-    }
-
-    return true;
   }
 }
