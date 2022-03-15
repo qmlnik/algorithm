@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../js/algorithm.js"></script>
     <script src="../js/demoUI.js"></script>
+    <script src="../js/cnfgenerator.js"></script>
   </head>
   <body>
     <div class="page-title">Demó</div>
@@ -17,9 +18,9 @@
     <div class="title">Input CNF:</div>
     <textarea class="cnf-input-textarea js-cnf-input">1 -12 -15 0&#13;&#10;-9 15 -5 0&#13;&#10;8 9 2 0&#13;&#10;13 -11 -15 0&#13;&#10;7 3 8 0&#13;&#10;4 2 -2 0&#13;&#10;-7 15 -11 0&#13;&#10;7 5 -13 0&#13;&#10;4 -9 10 0&#13;&#10;-1 9 -7 0&#13;&#10;-10 1 15 0&#13;&#10;-10 15 14 0&#13;&#10;-9 5 -10 0&#13;&#10;10 5 -14 0&#13;&#10;-13 5 -6 0&#13;&#10;2 14 -3 0&#13;&#10;-4 -8 -6 0&#13;&#10;5 -6 9 0&#13;&#10;-1 -2 -14 0&#13;&#10;11 6 12 0&#13;&#10;-7 4 -14 0&#13;&#10;4 -11 12 0&#13;&#10;-12 3 4 0&#13;&#10;7 -5 -9 0&#13;&#10;8 -1 4 0&#13;&#10;-2 -11 -5 0&#13;&#10;1 2 -8 0&#13;&#10;-13 -5 1 0&#13;&#10;13 12 -8 0&#13;&#10;-6 -4 -11 0&#13;&#10;-14 -4 -12 0&#13;&#10;3 6 -12 0&#13;&#10;-3 -10 13 0&#13;&#10;-6 -3 12 0&#13;&#10;11 9 -2 0&#13;&#10;-15 6 -7 0&#13;&#10;-13 3 -2 0&#13;&#10;-3 12 -9 0&#13;&#10;11 3 -13 0&#13;&#10;13 6 11 0&#13;&#10;6 2 -5 0&#13;&#10;-8 -1 10 0&#13;&#10;14 9 -4 0&#13;&#10;13 10 8 0&#13;&#10;11 -4 -10 0</textarea>
     <button class="start-button js-start">mehet</button>
-    <div class="title">Modellek:</div>
+    <div class="title">Modell:</div>
     <div class="js-print-all_model"></div>
-    <div class="title">Modellek vizualizációja:</div>
+    <div class="title">Modell vizualizációja:</div>
     <div class="js-model-visualizer"></div>
     <script>
       let demoui = new DemoUI($(".js-variable-num") , $(".js-cnf-input"), $(".js-print-all_model"), $(".js-model-visualizer"), $(".js-start"));

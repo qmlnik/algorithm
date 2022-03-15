@@ -1,60 +1,58 @@
 class Algorithm{
-  constructor(variableNum, cnfArray, isHeuristic = true){
+  constructor(variableNum, cnfArray){
     this._variableNum = variableNum;
     this._cnfArray = cnfArray;
-    this._isHeuristic = isHeuristic;
-    this._tempModelSet = [];
-    this._resultModelSet = [];
-    this._finalModelSet = [[]];
-    for(let i = 0; i < this._variableNum; i++)
-      this._finalModelSet[0].push(-1);
-
     this._usedVariables = new Set();
+
     this._usedClauses = [];
     for(let i = 0; i < this._cnfArray.length; i++)
       this._usedClauses.push(0);
 
-    /*even index: nth positive literal occurences
-    odd index: nth negative literal occurences*/
-    this._literalOccurrences = [];
-    for(let i = 0; i < variableNum * 2; i++)
-      this._literalOccurrences.push(0);
+    this._clauseOrder = [];
+    for(let i = 0; i < this._cnfArray.length; i++)
+      this._clauseOrder.push(this._findBestClause());
+
+    this._clauseModelSet = [];
+    for(let i = 0; i < this._cnfArray.length; i++)
+      this._clauseModelSet.push(this._generateAllModelSet(this._cnfArray[i]));
   }
 
-  startAlgorithm(){
-    let bestClause;
-    for(let i = 0; i < this._cnfArray.length; i++){
-      bestClause = this._isHeuristic ? this._findBestClause() : i;
-      this._tempModelSet = this._generateAllModelSet(this._cnfArray[bestClause]);
+  algorithmFrontEnd(){
+    let startModelSet = [];
+    for(let i = 0; i < this._variableNum; i++)
+      startModelSet.push(-1);
 
-      for(let j = 0; j < this._tempModelSet.length; j++){
-        for(let k = 0; k < this._finalModelSet.length; k++){
-          if(this._isMatching(this._tempModelSet[j], this._finalModelSet[k]))
-            this._resultModelSet.push(this._intersection(this._tempModelSet[j], this._finalModelSet[k]));
-        }
-      }
-
-      this._finalModelSet = this._resultModelSet;
-      this._countOccurences(this._finalModelSet);
-      this._resultModelSet = [];
+    let firstClauseIndex = this._clauseOrder[0];
+    let allModelSet = this._clauseModelSet[firstClauseIndex];
+    let result;
+    for(let i = 0; i < allModelSet.length; i++){
+      result = this._algorithm(startModelSet, allModelSet[i], 1);
+      if(result !== false)
+        return result;
     }
 
-    return this._finalModelSet;
+    return false;
   }
 
-  _countOccurences(modelSet){
-    for(let i = 0; i < this._literalOccurrences.length; i++)
-      this._literalOccurrences[i] = 0;
+  _algorithm(currentModelSet, nextModelSet, depth){
+    if(!this._isMatching(currentModelSet, nextModelSet))
+      return false;
 
-    for(let i = 0; i < modelSet.length; i++){
-      for(let j = 0; j < modelSet[i].length; j++){
-        if(modelSet[i][j] == 1){
-          this._literalOccurrences[j * 2]++;
-        } else if(modelSet[i][j] == 0){
-          this._literalOccurrences[(j * 2) + 1]++;
-        }
-      }
+    let actualModelSet = this._intersection(currentModelSet, nextModelSet);
+
+    if(depth == this._cnfArray.length)
+      return actualModelSet;
+
+    let currentClauseIndex = this._clauseOrder[depth];
+    let allModelSet = this._clauseModelSet[currentClauseIndex];
+    let result;
+    for(let i = 0; i < allModelSet.length; i++){
+      result = this._algorithm(actualModelSet, allModelSet[i], depth + 1);
+      if(result !== false)
+        return result;
     }
+
+    return false;
   }
 
   _findBestClause(){
@@ -165,33 +163,6 @@ class Algorithm{
 
   _negate(val){
     return val == 1 ? 0 : 1;
-  }
-
-  convertModelSetToActual(){
-    let modelActual = [];
-
-    for(let i = 0; i < this._finalModelSet.length; i++)
-      this._getAllModel(modelActual, this._finalModelSet[i]);
-
-    return modelActual;
-  }
-
-  /*This is not part of the algorithm, its only purpose is to extract all the interpretations from the model sets*/
-  _getAllModel(modelActual, modelSet){
-    let indexOf = modelSet.indexOf(-1);
-    if(indexOf < 0){
-      modelActual.push(modelSet);
-    } else {
-      let newModelSetOne = [];
-      for(let i = 0; i < modelSet.length; i++)
-        newModelSetOne[i] = indexOf == i ? 0 : modelSet[i];
-      this._getAllModel(modelActual, newModelSetOne);
-
-      let newModelSetTwo = [];
-      for(let i = 0; i < modelSet.length; i++)
-        newModelSetTwo[i] = indexOf == i ? 1 : modelSet[i];
-      this._getAllModel(modelActual, newModelSetTwo);
-    }
   }
 
   static checkIfModel(cnfArray, model){

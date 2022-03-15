@@ -1,10 +1,10 @@
 class TestUI{
-  constructor(intervalMinInputCont, intervalMaxInputCont, heuristicSelectCont, startButtonCont, canvasCont, tableResultCont){
+  constructor(intervalMinInputCont, intervalMaxInputCont, startButtonCont, canvasRuntimeCont, canvasMemoryCont, tableResultCont){
       this._intervalMinInputCont = intervalMinInputCont;
       this._intervalMaxInputCont = intervalMaxInputCont;
-      this._heuristicSelectCont = heuristicSelectCont;
       this._startButtonCont = startButtonCont;
-      this._canvasCont = canvasCont;
+      this._canvasRuntimeCont = canvasRuntimeCont;
+      this._canvasMemoryCont = canvasMemoryCont;
       this._tableResultCont = tableResultCont;
       this._resultMap;
   }
@@ -15,16 +15,15 @@ class TestUI{
       let cnfArray;
       let meanRuntime;
       let startTime, endTime;
-      let isHeuristic = self._heuristicSelectCont.val() == "1" ? true : false;
       self._resultMap = new Map();
       for(let n = parseInt(self._intervalMinInputCont.val()); n <= parseInt(self._intervalMaxInputCont.val()); n++){
         meanRuntime = 0;
         for(let j = 0; j < 100; j++){
           console.log("n=" + n + ", " + (j + 1) + "/100");
           cnfArray = generateCnf(n);
-          let algorithm = new Algorithm(n, cnfArray, isHeuristic);
+          let algorithm = new Algorithm(n, cnfArray);
           startTime = performance.now();
-          algorithm.startAlgorithm();
+          algorithm.algorithmFrontEnd();
           endTime = performance.now();
           meanRuntime += endTime - startTime;
         }
@@ -32,38 +31,34 @@ class TestUI{
       }
 
       self._printResultMap();
-      self._drawChart();
+      self._drawCharts();
     });
   }
 
   _printResultMap(){
-    let text = "<tr><th>Változószám</th><th>Átlagos idő</th></tr>";
+    let text = "<tr><th>n</th><th>Átlagos idő</th></tr>";
     this._resultMap.forEach((value, key)=>{
       text += "<tr><td>n=" + key + "</td><td>" + value + "ms</td></tr>"
     });
     this._tableResultCont.html(text);
   }
 
-  _drawChart(){
-    this._canvasCont.find("canvas").remove();
-    this._canvasCont.append("<canvas class='test-canvas' width='300' height='100'></canvas>");
-    let canvas = this._canvasCont.find("canvas");
-    let resultMapKeyArray = [];
-    let resultMapValueArray = [];
-    let bgcolor = [];
+  _drawCharts(){
+    this._canvasRuntimeCont.find("canvas").remove();
+    this._canvasRuntimeCont.append("<canvas class='test-canvas' height='100'></canvas>");
+    let resultMapRuntimeKeyArray = [];
+    let resultMapRuntimeValueArray = [];
     this._resultMap.forEach((value, key)=>{
-      resultMapKeyArray.push(key.toString());
-      resultMapValueArray.push(parseFloat(value));
-      bgcolor.push("#ff0000");
+      resultMapRuntimeKeyArray.push(key.toString());
+      resultMapRuntimeValueArray.push(parseFloat(value));
     });
-    let ctx = canvas;
-    let chart = new Chart(ctx, {
+    new Chart(this._canvasRuntimeCont.find("canvas"), {
       type: 'bar',
       data: {
-        labels: resultMapKeyArray,
+        labels: resultMapRuntimeKeyArray,
         datasets: [{
-          label: "változószám",
-          data: resultMapValueArray,
+          label: "n",
+          data: resultMapRuntimeValueArray,
           backgroundColor: "rgba(0, 0, 255, 1.0)",
         }]
       }
